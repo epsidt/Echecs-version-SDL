@@ -560,10 +560,10 @@ void piece::basgauche(echiquier *Echiquier)
 		{
 			if (Echiquier->GetCases(xi - dx, yi + dy)->getoccuper() != true)
 			{
-				//if (getid() != 0)
-				//{
+				if (getid() != 0)
+				{
 					Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
-				//}
+				}
 			}
 			else if (Echiquier->GetCases(xi - dx, yi + dy)->getcouleurdeloccupant() != couleur)
 			{
