@@ -1,0 +1,2 @@
+﻿  GenerateurPiece.cpp
+c:\dev\firstsdlwindow\firstsdlwindow\generateurpiece.cpp(12): error C4716: 'GenerateurPiece::generer' : doit retourner une valeur
