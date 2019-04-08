@@ -5,6 +5,8 @@
 #include <SDL_image.h>
 #include <vector>
 
+#include "GenerateurPiece.h"
+
 #include "pion.h"
 #include "tour.h"
 #include "cavalier.h"
@@ -36,7 +38,7 @@ private:
 
 	vector<GameObject*> Pointverts;
 
-	piece lesPieces[32];
+	piece* lesPieces[32];
 
 	bool isRunning;
 	SDL_Window *window;

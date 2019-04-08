@@ -228,11 +228,11 @@ void jeu::init(const char * titre, int xpos, int ypos, int largeur, int hauteur,
 			for (int x = px; x < mx; x += ix)
 			{
 				cout << "\n |id :" << i << " |couleur :" << c + 1 << " |type piece :" << typePiece << "\n |texture : "<< texture <<" |x :" << x << " |y :" << y << endl;
-				lesPieces[id] = piece(i, false, 1, c + 1, Echiquier->GetCases(x, y)->Rcase, Echiquier->GetCases(x, y)->getx(), Echiquier->GetCases(x, y)->gety(), texture, renderer);
-				lesPieces[id].setposI(); // remplace la position initial sur le tableau
+				lesPieces[id] = GenerateurPiece::generer(i, false, 1, c + 1, Echiquier->GetCases(x, y)->Rcase, Echiquier->GetCases(x, y)->getx(), Echiquier->GetCases(x, y)->gety(), texture, renderer);
+				lesPieces[id]->setposI(); // remplace la position initial sur le tableau
 				// les cases sur les quelles les pions on été initialiser sont mise a occuper
 				Echiquier->GetCases(x, y)->setoccuper(true);
-				Echiquier->GetCases(x, y)->setcouleurdeloccupant(lesPieces[id].getcouleur());
+				Echiquier->GetCases(x, y)->setcouleurdeloccupant(lesPieces[id]->getcouleur());
 				id++;
 			}
 		}
@@ -256,14 +256,14 @@ void jeu::handleEvents()
 		{
 			if (event.button.button == SDL_BUTTON_LEFT) // piece selecioné
 			{
-				if (lesPieces[i].getmanger() != true)
+				if (lesPieces[i]->getmanger() != true)
 				{
-					if (event.button.x > lesPieces[i].getPos().x - 10 && event.button.x < lesPieces[i].getPos().x + 40 && event.button.y > lesPieces[i].getPos().y && event.button.y < lesPieces[i].getPos().y + 70)
+					if (event.button.x > lesPieces[i]->getPos().x - 10 && event.button.x < lesPieces[i]->getPos().x + 40 && event.button.y > lesPieces[i]->getPos().y && event.button.y < lesPieces[i]->getPos().y + 70)
 					{
 						if (once)
 						{
-							cout << "position initial : xi " << lesPieces[i].getxi() << " yi " << lesPieces[i].getyi() << endl;
-							lesPieces[i].dispodeplace(Echiquier); // rend les case disponible au deplacement
+							cout << "position initial : xi " << lesPieces[i]->getxi() << " yi " << lesPieces[i]->getyi() << endl;
+							lesPieces[i]->dispodeplace(Echiquier); // rend les case disponible au deplacement
 							for (int cy = 0; cy < 8; cy++)
 							{
 								for (int cx = 0; cx < 8; cx++)
@@ -278,7 +278,7 @@ void jeu::handleEvents()
 								}
 							}
 						}
-						lesPieces[i].Position(event.button.x - 19, event.button.y - 31);
+						lesPieces[i]->Position(event.button.x - 19, event.button.y - 31);
 						iA = i;
 						iB = i + 1;
 						once = false;
@@ -289,58 +289,58 @@ void jeu::handleEvents()
 							{
 								for (int x = 0; x < 8; x++)
 								{
-									if (GameObject::comparerPosition(&lesPieces[i].getPos(), &Echiquier->GetCases(x, y)->Rcase, 36)) // force la position dans une case
+									if (GameObject::comparerPosition(&lesPieces[i]->getPos(), &Echiquier->GetCases(x, y)->Rcase, 36)) // force la position dans une case
 									{
-										lesPieces[i].setx(x); // met les nouvel position du pion dans le tableau
-										lesPieces[i].sety(y);
+										lesPieces[i]->setx(x); // met les nouvel position du pion dans le tableau
+										lesPieces[i]->sety(y);
 
-										lesPieces[i].Position(Echiquier->GetCases(x, y)->Rcase.x, Echiquier->GetCases(x, y)->Rcase.y); // position de test ou le pion a été poser
-										cout << "position en test " << lesPieces[i].getx() << lesPieces[i].gety() << endl;
+										lesPieces[i]->Position(Echiquier->GetCases(x, y)->Rcase.x, Echiquier->GetCases(x, y)->Rcase.y); // position de test ou le pion a été poser
+										cout << "position en test " << lesPieces[i]->getx() << lesPieces[i]->gety() << endl;
 									}
 								}
 							}
 
-							if (lesPieces[i].deplacement(Echiquier)) // vérification deplacement valide ( case en x et y disponible)
+							if (lesPieces[i]->deplacement(Echiquier)) // vérification deplacement valide ( case en x et y disponible)
 							{
-								Echiquier->GetCases(lesPieces[i].getx(), lesPieces[i].gety())->setoccuper(true);
-								Echiquier->GetCases(lesPieces[i].getx(), lesPieces[i].gety())->setcouleurdeloccupant(lesPieces[i].getcouleur());
+								Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setoccuper(true);
+								Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setcouleurdeloccupant(lesPieces[i]->getcouleur());
 
 								for (int ip = 0; ip < 32; ip++)
 								{
-									if (lesPieces[i].getx() == lesPieces[ip].getx() && lesPieces[i].gety() == lesPieces[ip].gety()) // test si il y a un pion sur notre case
+									if (lesPieces[i]->getx() == lesPieces[ip]->getx() && lesPieces[i]->gety() == lesPieces[ip]->gety()) // test si il y a un pion sur notre case
 									{
-										cout << "x " << lesPieces[i].getx() << " et y " << lesPieces[i].gety() << " du premier pion, x " << lesPieces[ip].getx() << " et y " << lesPieces[ip].gety() << " du deuxieme pion" << endl;
-										if (lesPieces[ip].getcouleur() != lesPieces[i].getcouleur()) // et si le pion est d'une autre couleur
+										cout << "x " << lesPieces[i]->getx() << " et y " << lesPieces[i]->gety() << " du premier pion, x " << lesPieces[ip]->getx() << " et y " << lesPieces[ip]->gety() << " du deuxieme pion" << endl;
+										if (lesPieces[ip]->getcouleur() != lesPieces[i]->getcouleur()) // et si le pion est d'une autre couleur
 										{
-											lesPieces[ip].setmanger(true);
-											lesPieces[ip].Position(0, 23*ip);
-											cout << "sayonara pion" << lesPieces[ip].getid() << lesPieces[ip].getcouleur() << endl;
+											lesPieces[ip]->setmanger(true);
+											lesPieces[ip]->Position(0, 23*ip);
+											cout << "sayonara pion" << lesPieces[ip]->getid() << lesPieces[ip]->getcouleur() << endl;
 										}
 									}
 								}
-								Echiquier->GetCases(lesPieces[i].getxi(), lesPieces[i].getyi())->setoccuper(false);
-								Echiquier->GetCases(lesPieces[i].getxi(), lesPieces[i].getyi())->setcouleurdeloccupant(0);
-								lesPieces[i].setposI(); // remplace la position initial sur le tableau
+								Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->setoccuper(false);
+								Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->setcouleurdeloccupant(0);
+								lesPieces[i]->setposI(); // remplace la position initial sur le tableau
 
-								if (lesPieces[i].getdepIncorrect() != true) // verifie si le deplacement est correct
+								if (lesPieces[i]->getdepIncorrect() != true) // verifie si le deplacement est correct
 								{
-									lesPieces[i].setpdep(false); // retire le premier deplacement au pion 
+									lesPieces[i]->setpdep(false); // retire le premier deplacement au pion 
 								}
 
-								lesPieces[i].setdepIncorrect(false); // le deplace ment est correct
+								lesPieces[i]->setdepIncorrect(false); // le deplace ment est correct
 
 							}
 							else// n'execute pas cela si le deplacement est valide
 							{
-								lesPieces[i].setdepIncorrect(true);
+								lesPieces[i]->setdepIncorrect(true);
 							}
 
-							if (lesPieces[i].getdepIncorrect()) // si le deplacement est incorrect replace le pion sur sa position inital
+							if (lesPieces[i]->getdepIncorrect()) // si le deplacement est incorrect replace le pion sur sa position inital
 							{
-								lesPieces[i].Position(Echiquier->GetCases(lesPieces[i].getxi(), lesPieces[i].getyi())->Rcase.x, Echiquier->GetCases(lesPieces[i].getxi(), lesPieces[i].getyi())->Rcase.y);
-								Echiquier->GetCases(lesPieces[i].getx(), lesPieces[i].gety())->setoccuper(false);
-								Echiquier->GetCases(lesPieces[i].getx(), lesPieces[i].gety())->setcouleurdeloccupant(0);
-								lesPieces[i].setpos();
+								lesPieces[i]->Position(Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->Rcase.x, Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->Rcase.y);
+								Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setoccuper(false);
+								Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setcouleurdeloccupant(0);
+								lesPieces[i]->setpos();
 							}
 
 
@@ -376,7 +376,7 @@ void jeu::update()
 	Echiquier->Update();
 	for (int i = 0; i < 32; i++)
 	{
-		lesPieces[i].Update();
+		lesPieces[i]->Update();
 	}
 }
 
@@ -392,7 +392,7 @@ void jeu::render()
 
 	for (int i = 0; i < 32; i++)
 	{
-		lesPieces[i].Render();
+		lesPieces[i]->Render();
 
 	}
 	

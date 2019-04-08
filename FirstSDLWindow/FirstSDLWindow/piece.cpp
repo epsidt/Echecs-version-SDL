@@ -152,7 +152,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 	cout << "pdep = " << iydep << endl;
 	cout << "couleur = " << couleur << endl;
 
-	if (id == 0) // Pion
+	if (getid() == 0) // Pion
 	{
 		dx = 1;
 		dy = 1;
@@ -182,7 +182,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 			haut(Echiquier);
 		}
 	}
-	if (id == 1) // tour
+	if (getid() == 1) // tour
 	{
 		dx = 1;
 		dy = 1;
@@ -194,7 +194,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 		gauche(Echiquier);
 		droite(Echiquier);
 	}
-	if (id == 2)// cavalier
+	if (getid() == 2)// cavalier
 	{
 	//================= VERS LA DROITE =======================
 		//------ hautdroite ------
@@ -257,7 +257,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 		dy = 1;
 		basgauche(Echiquier);
 	}
-	if (id == 3) // fou
+	if (getid() == 3) // fou
 	{
 		dx = 1;
 		dy = 1;
@@ -269,7 +269,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 		hautgauche(Echiquier);
 		basdroite(Echiquier);
 	}
-	if (id == 4) // roi
+	if (getid() == 4) // roi
 	{
 		dx = 1;
 		dy = 1;
@@ -281,7 +281,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 		gauche(Echiquier);
 		droite(Echiquier);
 	}
-	if (id == 5) // reine
+	if (getid() == 5) // reine
 	{
 		dx = 1;
 		dy = 1;

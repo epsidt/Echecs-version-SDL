@@ -1,0 +1,10 @@
+﻿  Case.cpp
+  echiquier.cpp
+  GameObject.cpp
+  jeu.cpp
+  main.cpp
+  piece.cpp
+  pion.cpp
+  TextureManager.cpp
+  tour.cpp
+LINK : fatal error LNK1561: le point d'entrée doit être défini
