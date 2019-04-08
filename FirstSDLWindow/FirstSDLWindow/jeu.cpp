@@ -262,6 +262,7 @@ void jeu::handleEvents()
 					{
 						if (once)
 						{
+							lesPieces[i]->setposI();
 							cout << "position initial : xi " << lesPieces[i]->getxi() << " yi " << lesPieces[i]->getyi() << endl;
 							lesPieces[i]->dispodeplace(Echiquier); // rend les case disponible au deplacement
 							for (int cy = 0; cy < 8; cy++)
@@ -270,10 +271,9 @@ void jeu::handleEvents()
 								{
 									if (Echiquier->GetCases(cx, cy)->getdisponible())
 									{
-										cout << "test pointverst : x" << cx << " y" << cy << endl;
 										Pointverts.push_back(new GameObject("texture/disponible.png", renderer));
 										Pointverts.back()->Position(Echiquier->GetCases(cx, cy)->Rcase.x, Echiquier->GetCases(cx, cy)->Rcase.y);
-										Pointverts.back()->Taille(35, 60);
+										Pointverts.back()->Taille(40, 70);
 									}
 								}
 							}
