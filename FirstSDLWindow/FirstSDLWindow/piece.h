@@ -65,7 +65,7 @@ protected:
 	int ixdep = 0; // jusqu'à combien en x?
 	int iydep = 0; // jusqu'à combien en y?
 
-	bool pdep;
+	bool pdep = 1;
 	bool depIncorrect = false;
 
 	int id;

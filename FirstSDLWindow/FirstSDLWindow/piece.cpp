@@ -149,37 +149,76 @@ piece::~piece()
 // -----------------LES DEPLACEMENTs !!!----------------------
 void piece::dispodeplace(echiquier *Echiquier)
 {
-	cout << "pdep = " << iydep << endl;
+	cout << "pdep = " << pdep << endl;
 	cout << "couleur = " << couleur << endl;
 
 	if (getid() == 0) // Pion
 	{
 		dx = 1;
 		dy = 1;
+		ixdep = 1;
 
 		if (couleur == 1) // Deplacement en fonction de la couleur
 		{
-			if (pdep) // premier deplacement ou non
+			if (pdep == 1) // premier deplacement ou non
 			{
 				iydep = 2; // indice de deplacement en y en fonction de la piece et de la couleur
+
+				bas(Echiquier);
+
+				dx = 1;
+				dy = 1;
+				basgauche(Echiquier);
+
+				dx = 1;
+				dy = 1;
+				basdroite(Echiquier);
 			}
-			else if (!pdep)
+			else if (pdep == 0)
 			{
 				iydep = 1;
+
+				bas(Echiquier);
+
+				dx = 1;
+				dy = 1;
+				basgauche(Echiquier);
+
+				dx = 1;
+				dy = 1;
+				basdroite(Echiquier);
 			}
-			bas(Echiquier);
 		}
 		if (couleur == 2) // Deplacement en fonction de la couleur
 		{
-			if (pdep)
+			if (pdep == 1)
 			{
 				iydep = 2;
+
+				haut(Echiquier);
+
+				dx = 1;
+				dy = 2;
+				hautgauche(Echiquier);
+
+				dx = 1;
+				dy = 2;
+				hautdroite(Echiquier);
 			}
-			else if (!pdep)
+			else if (pdep == 0)
 			{
 				iydep = 1;
+
+				haut(Echiquier);
+
+				dx = 1;
+				dy = 1;
+				hautgauche(Echiquier);
+
+				dx = 1;
+				dy = 1;
+				hautdroite(Echiquier);
 			}
-			haut(Echiquier);
 		}
 	}
 	if (getid() == 1) // tour
@@ -223,18 +262,18 @@ void piece::dispodeplace(echiquier *Echiquier)
 		dy = 1;
 		hautdroite(Echiquier);
 		//------ basdroite ------
-		ixdep = 1;
-		iydep = 2;
-
-		dx = 1;
-		dy = 2;
-		basdroite(Echiquier);
-		//------ droitebas ------
 		ixdep = 2;
 		iydep = 1;
 
 		dx = 2;
 		dy = 1;
+		basdroite(Echiquier);
+		//------ droitebas ------
+		ixdep = 1;
+		iydep = 2;
+
+		dx = 1;
+		dy = 2;
 		basdroite(Echiquier);
 
 	//================= VERS LA GAUCHE =======================
@@ -274,10 +313,24 @@ void piece::dispodeplace(echiquier *Echiquier)
 		dy = 1;
 		ixdep = 8;
 		iydep = 8;
-
 		hautdroite(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		basgauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		hautgauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		basdroite(Echiquier);
 	}
 	if (getid() == 4) // roi
@@ -288,9 +341,49 @@ void piece::dispodeplace(echiquier *Echiquier)
 		iydep = 1;
 
 		haut(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
 		bas(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
 		gauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
 		droite(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
+		hautdroite(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
+		basgauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
+		hautgauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 1;
+		iydep = 1;
+		basdroite(Echiquier);
+
 	}
 	if (getid() == 5) // reine
 	{
@@ -300,13 +393,47 @@ void piece::dispodeplace(echiquier *Echiquier)
 		iydep = 8;
 
 		haut(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		bas(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		gauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		droite(Echiquier);
 
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		hautdroite(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		basgauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		hautgauche(Echiquier);
+
+		dx = 1;
+		dy = 1;
+		ixdep = 8;
+		iydep = 8;
 		basdroite(Echiquier);
 	}
 }
@@ -322,7 +449,10 @@ void piece::haut(echiquier *Echiquier)
 		}
 		else if (Echiquier->GetCases(xi, yi - dy)->getcouleurdeloccupant() != couleur)
 		{
-			Echiquier->GetCases(xi, yi - dy)->setdisponible(true);
+			if (getid() != 0)
+			{
+				Echiquier->GetCases(xi, yi - dy)->setdisponible(true);
+			}
 		}
 		if (Echiquier->GetCases(xi, yi - dy)->getoccuper() == true)
 		{
@@ -342,7 +472,11 @@ void piece::bas(echiquier *Echiquier)
 		}
 		else if (Echiquier->GetCases(xi, yi + dy)->getcouleurdeloccupant() != couleur)
 		{
-			Echiquier->GetCases(xi, yi + dy)->setdisponible(true);
+			if (getid() != 0)
+			{
+				Echiquier->GetCases(xi, yi + dy)->setdisponible(true);
+			}
+			
 		}
 		if (Echiquier->GetCases(xi, yi + dy)->getoccuper() == true)
 		{
@@ -352,26 +486,7 @@ void piece::bas(echiquier *Echiquier)
 }
 void piece::gauche(echiquier *Echiquier)
 {
-	//------------------------ gauche ----------------------------
-	for (dx; dx <= ixdep && dx <= 7 - xi; dx++)
-	{
-		if (Echiquier->GetCases(xi + dx, yi)->getoccuper() != true)
-		{
-			Echiquier->GetCases(xi + dx, yi)->setdisponible(true);
-		}
-		else if (Echiquier->GetCases(xi + dx, yi)->getcouleurdeloccupant() != couleur)
-		{
-			Echiquier->GetCases(xi + dx, yi)->setdisponible(true);
-		}
-		if (Echiquier->GetCases(xi + dx, yi)->getoccuper() == true)
-		{
-			dx += 8;
-		}
-	}
-}
-void piece::droite(echiquier *Echiquier)
-{
-	//------------------------- droite -----------------------------
+	//------------------------- gauche -----------------------------
 	for (dx; dx <= ixdep && dx <= xi; dx++)
 	{
 		if (Echiquier->GetCases(xi - dx, yi)->getoccuper() != true)
@@ -388,17 +503,94 @@ void piece::droite(echiquier *Echiquier)
 		}
 	}
 }
+void piece::droite(echiquier *Echiquier)
+{
+	
+	//------------------------ droite ----------------------------
+	for (dx; dx <= ixdep && dx <= 7 - xi; dx++)
+	{
+		if (Echiquier->GetCases(xi + dx, yi)->getoccuper() != true)
+		{
+			Echiquier->GetCases(xi + dx, yi)->setdisponible(true);
+		}
+		else if (Echiquier->GetCases(xi + dx, yi)->getcouleurdeloccupant() != couleur)
+		{
+			Echiquier->GetCases(xi + dx, yi)->setdisponible(true);
+		}
+		if (Echiquier->GetCases(xi + dx, yi)->getoccuper() == true)
+		{
+			dx += 8;
+		}
+	}
+}
 
 void piece::hautdroite(echiquier *Echiquier)
 {
 	//------------------------- hautdroite ------------------------------
+	for (dx; dx <= ixdep && dx <= 7 - xi; dx++)
+	{
+		if (dy <= iydep && dy <= yi)
+		{
+			if (Echiquier->GetCases(xi + dx, yi - dy)->getoccuper() != true)
+			{
+				if (getid() != 0)
+				{
+					Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
+				}
+			}
+			else if (Echiquier->GetCases(xi + dx, yi - dy)->getcouleurdeloccupant() != couleur)
+			{
+				Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
+			}
+			if (Echiquier->GetCases(xi + dx, yi - dy)->getoccuper() == true)
+			{
+				dx += 8;
+				dy += 8;
+			}
+			dy++;
+		}
+	}
+}
+void piece::basgauche(echiquier *Echiquier)
+{
+	//------------------------- basgauche -------------------------------
 	for (dx; dx <= ixdep && dx <= xi; dx++)
 	{
-		for (dy; dy <= iydep && dy <= yi; dy++)
+		if (dy <= iydep && dy <= 7 - yi)
+		{
+			if (Echiquier->GetCases(xi - dx, yi + dy)->getoccuper() != true)
+			{
+				//if (getid() != 0)
+				//{
+					Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
+				//}
+			}
+			else if (Echiquier->GetCases(xi - dx, yi + dy)->getcouleurdeloccupant() != couleur)
+			{
+				Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
+			}
+			if (Echiquier->GetCases(xi - dx, yi + dy)->getoccuper() == true)
+			{
+				dx += 8;
+				dy += 8;
+			}
+			dy++;
+		}
+	}
+}
+void piece::hautgauche(echiquier *Echiquier)
+{
+	//------------------------ hautgauche ----------------------------
+	for (dx; dx <= ixdep && dx <= xi; dx++)
+	{
+		if (dy <= iydep && dy <= yi)
 		{
 			if (Echiquier->GetCases(xi - dx, yi - dy)->getoccuper() != true)
 			{
-				Echiquier->GetCases(xi - dx, yi - dy)->setdisponible(true);
+				if (getid() != 0)
+				{
+					Echiquier->GetCases(xi - dx, yi - dy)->setdisponible(true);
+				}
 			}
 			else if (Echiquier->GetCases(xi - dx, yi - dy)->getcouleurdeloccupant() != couleur)
 			{
@@ -409,19 +601,23 @@ void piece::hautdroite(echiquier *Echiquier)
 				dx += 8;
 				dy += 8;
 			}
+			dy++;
 		}
 	}
 }
-void piece::basgauche(echiquier *Echiquier)
+void piece::basdroite(echiquier *Echiquier)
 {
-	//------------------------- basgauche -------------------------------
+	//------------------------- basdroite -----------------------------
 	for (dx; dx <= ixdep && dx <= 7 - xi; dx++)
 	{
-		for (dy; dy <= iydep && dy <= 7 - yi; dy++)
+		if (dy <= iydep && dy <= 7 - yi)
 		{
 			if (Echiquier->GetCases(xi + dx, yi + dy)->getoccuper() != true)
 			{
-				Echiquier->GetCases(xi + dx, yi + dy)->setdisponible(true);
+				if (getid() != 0)
+				{
+					Echiquier->GetCases(xi + dx, yi + dy)->setdisponible(true);
+				}
 			}
 			else if (Echiquier->GetCases(xi + dx, yi + dy)->getcouleurdeloccupant() != couleur)
 			{
@@ -432,42 +628,7 @@ void piece::basgauche(echiquier *Echiquier)
 				dx += 8;
 				dy += 8;
 			}
-		}
-	}
-}
-void piece::hautgauche(echiquier *Echiquier)
-{
-	//------------------------ hautgauche ----------------------------
-	for (dy; dy <= iydep && dy <= yi; dy++)
-	{
-		for (dx; dx <= ixdep && dx <= 8 - xi; dx++)
-		{
-			if (Echiquier->GetCases(xi + dx, yi - dy)->getoccuper() != true)
-			{
-				Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
-			}
-			else if (Echiquier->GetCases(xi + dx, yi - dy)->getcouleurdeloccupant() != couleur)
-			{
-				Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
-			}
-		}
-	}
-}
-void piece::basdroite(echiquier *Echiquier)
-{
-	//------------------------- basdroite -----------------------------
-	for (dy; dy <= iydep && dy <= 8 - yi; dy++)
-	{
-		for (dx; dx <= ixdep && dx <= 8 - (8 - xi); dx++)
-		{
-			if (Echiquier->GetCases(xi - dx, yi + dy)->getoccuper() != true)
-			{
-				Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
-			}
-			else if (Echiquier->GetCases(xi - dx, yi + dy)->getcouleurdeloccupant() != couleur)
-			{
-				Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
-			}
+			dy++;
 		}
 	}
 }
