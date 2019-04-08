@@ -34,6 +34,7 @@ public:
 	bool running();
 
 private:
+	int jtour = 0; // tour de jeu
 	echiquier *Echiquier;
 
 	vector<GameObject*> Pointverts;
