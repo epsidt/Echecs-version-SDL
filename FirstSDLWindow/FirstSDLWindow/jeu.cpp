@@ -1,4 +1,5 @@
 #include "jeu.h"
+#include "TextureManager.h"
 
 int iA = 0;
 int iB = 32;
@@ -39,6 +40,10 @@ void jeu::init(const char * titre, int xpos, int ypos, int largeur, int hauteur,
 	else {
 		isRunning = false;
 	}
+	background = new GameObject("texture/background.png", renderer);
+	background->Position(0, 0);
+	background->Taille(1280, 800);
+
 	//initialisation Echiquier
 	Echiquier = new echiquier("texture/Echiquier.png", renderer);
 	Echiquier->Position(300, 58);
@@ -240,9 +245,13 @@ void jeu::handleEvents()
 						{
 							if (once)
 							{
+								//------------------------------------ Rendre une case disponible ---------------------------------------
 								lesPieces[i]->setposI();
-								cout << "position initial : xi " << lesPieces[i]->getxi() << " yi " << lesPieces[i]->getyi() << endl;
+								cout << "\nPiece : id=" << lesPieces[i]->getid() << " couleur=" << lesPieces[i]->getcouleur() << endl;
+								cout << "position initial : xi=" << lesPieces[i]->getxi() << " yi=" << lesPieces[i]->getyi() << endl;
 								lesPieces[i]->dispodeplace(Echiquier); // rend les case disponible au deplacement
+								//-------------------------------------------------------------------------------------------------------
+
 								for (int cy = 0; cy < 8; cy++)
 								{
 									for (int cx = 0; cx < 8; cx++)
@@ -274,34 +283,74 @@ void jeu::handleEvents()
 											lesPieces[i]->sety(y);
 
 											lesPieces[i]->Position(Echiquier->GetCases(x, y)->Rcase.x, Echiquier->GetCases(x, y)->Rcase.y); // position de test ou le pion a été poser
-											cout << "position en test " << lesPieces[i]->getx() << lesPieces[i]->gety() << endl;
+											cout << "position : x=" << lesPieces[i]->getx() <<" y="<< lesPieces[i]->gety() << endl;
 										}
 									}
 								}
 								//-------------------------------------------------------------------------
-
+								
 								if (lesPieces[i]->deplacement(Echiquier)) // vérification deplacement valide ( case en x et y disponible)
 								{
 									jtour++;
+
+									//--------- PRISE EN PASSANT (mise en place) -----------
+									if (lesPieces[i]->getid() == 0)
+									{
+										if (lesPieces[i]->getpdep() != true)
+										{
+											Echiquier->GetCases(lesPieces[i]->getposPPx(), lesPieces[i]->getposPPy())->setcouleurdeloccupant(0);
+										}
+										
+										if (lesPieces[i]->getpdep() == true)
+										{
+											lesPieces[i]->setposPPy(false);
+											lesPieces[i]->setposPPx(false);
+
+											cout << "posPPy =" << lesPieces[i]->getposPPy() << "posPPx =" << lesPieces[i]->getposPPx() << endl;
+											Echiquier->GetCases(lesPieces[i]->getposPPx(), lesPieces[i]->getposPPy())->setcouleurdeloccupant(lesPieces[i]->getcouleur()); // la case en X/Y ACTUELLE est mise a la couleur du pion qui l'occupe
+										}
+									}
+									//------------------------------------------------------
+
+									//les paramètre des pièces sur l'ancienne position est suprrimer
 									Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->setoccuper(false); // la case en X/Y INITIALE est mise a NONoccuper
 									Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->setcouleurdeloccupant(0); // la case en X/Y INITIALE est sans couleur
+									//les paramètre des pièces sur la nouvelle position son misent a jour
 									Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setoccuper(true); // la case en X/Y ACTUELLE est mise a occuper
 									Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setcouleurdeloccupant(lesPieces[i]->getcouleur()); // la case en X/Y ACTUELLE est mise a la couleur du pion qui l'occupe
 
 									lesPieces[i]->setposI(); // remplace la position initial sur le tableau
 
+									//======================================= LE CANIBALISME DE PIECE ==============================================
 									for (int ip = 0; ip < 32; ip++)
 									{
+										//----------------------------------- Manger une piece ------------------------------------
 										if (lesPieces[i]->getx() == lesPieces[ip]->getx() && lesPieces[i]->gety() == lesPieces[ip]->gety()) // test s'il y a un pion sur nôtre case
 										{
-											cout << "x " << lesPieces[i]->getx() << " et y " << lesPieces[i]->gety() << " du premier pion, x " << lesPieces[ip]->getx() << " et y " << lesPieces[ip]->gety() << " du deuxieme pion" << endl;
-											if (lesPieces[ip]->getcouleur() != lesPieces[i]->getcouleur()) // Mange le pion s'il est d'une autre couleur
+											 if (lesPieces[ip]->getcouleur() != lesPieces[i]->getcouleur()) // Mange le pion s'il est d'une autre couleur
 											{
 												lesPieces[ip]->setmanger(true);
-												lesPieces[ip]->Position(0, 23 * ip);
-												cout << "sayonara pion" << lesPieces[ip]->getid() << lesPieces[ip]->getcouleur() << endl;
+												lesPieces[ip]->Position(20,23+23 * ip);
+												
+												cout << "manger pion" << lesPieces[ip]->getid() << lesPieces[ip]->getcouleur() << endl;
 											}
 										}
+										//------------------------------------------------------------------------------------------
+
+										//----------------------------------- Prise en passant -------------------------------------
+										if (lesPieces[i]->getid() == 0) // si c'est un pion
+										{
+											if (lesPieces[i]->getx() == lesPieces[ip]->getposPPx() && lesPieces[i]->gety() == lesPieces[ip]->getposPPy()) // et si il se trouve a la position de la prise en passant d'un autre pion
+											{
+												Echiquier->GetCases(lesPieces[ip]->getposPPx(), lesPieces[ip]->getposPPy())->setoccuper(false);
+												Echiquier->GetCases(lesPieces[ip]->getposPPx(), lesPieces[ip]->getposPPy())->setcouleurdeloccupant(0);
+
+												lesPieces[ip]->setmanger(true);
+												lesPieces[ip]->Position(20, 23 + 23 * ip);
+												cout << "\n prise en passant pion : \n ip=" << ip << " couleur=" << lesPieces[ip]->getcouleur() << "\n x=" << lesPieces[ip]->getx() << " y=" << lesPieces[ip]->gety() << " PPy" << lesPieces[ip]->getposPPy() << endl;
+											}
+										}
+										//------------------------------------------------------------------------------------------
 									}
 
 									if (lesPieces[i]->getdepIncorrect() == false) // verifie si le deplacement est correct
@@ -310,9 +359,9 @@ void jeu::handleEvents()
 									}
 
 									lesPieces[i]->setdepIncorrect(false); // le deplace ment est correct
-
+									iTDPiece = i;
 								}
-								else// n'execute pas cela si le deplacement est valide
+								else // n'execute pas cela si le deplacement est valide
 								{
 									lesPieces[i]->setdepIncorrect(true);
 								}
@@ -320,8 +369,7 @@ void jeu::handleEvents()
 								if (lesPieces[i]->getdepIncorrect()) // si le deplacement est incorrect replace le pion sur sa position inital
 								{
 									lesPieces[i]->Position(Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->Rcase.x, Echiquier->GetCases(lesPieces[i]->getxi(), lesPieces[i]->getyi())->Rcase.y);
-									//Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setoccuper(false);
-									//Echiquier->GetCases(lesPieces[i]->getx(), lesPieces[i]->gety())->setcouleurdeloccupant(0);
+
 									lesPieces[i]->setpos();
 									lesPieces[i]->setdepIncorrect(false);
 								}
@@ -368,6 +416,7 @@ void jeu::update()
 void jeu::render()
 {
 	SDL_RenderClear(renderer);
+	background->Render();
 	Echiquier->Render();
 
 	for (int i = 0; i < Pointverts.size(); i++)

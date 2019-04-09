@@ -13,8 +13,10 @@ public:
 
 	void setrposI(SDL_Rect *nouvRect); // set le rectangle de la position inital sur le tableau
 
-	void setposI(); // position inital sur le tableau
-	void setpos(); // position dans le tableau
+	//set la position inital par rapport a la réel position du pion sur le tableau
+	void setposI(); 
+	//set la position réel par rapport a la position inital du pion sur le tableau
+	void setpos();
 
 	SDL_Rect * getrI(); // renvois le rectengle initial
 
@@ -26,15 +28,23 @@ public:
 	void setmanger(bool nManger);
 	bool getmanger();
 
-	int getx();// position x sur le tableau
-	int gety();// position y sur le tableau
-	void setx(int nx);// position x sur le tableau
-	void sety(int ny);// position y sur le tableau
+	// position x sur le tableau
+	int getx();
+	// position y sur le tableau
+	int gety();
+	// position x sur le tableau
+	void setx(int nx);
+	// position y sur le tableau
+	void sety(int ny);
 
-	int getxi();// position initiale x sur le tableau
-	int getyi();// position initiale y sur le tableau
-	void setxi(int nxi);// position initiale x sur le tableau
-	void setyi(int nyi);// position initiale y sur le tableau
+	// position initiale x sur le tableau
+	int getxi();
+	// position initiale y sur le tableau
+	int getyi();
+	// position initiale x sur le tableau
+	void setxi(int nxi);
+	// position initiale y sur le tableau
+	void setyi(int nyi);
 
 	void setpdep(bool i);
 	bool getpdep();
@@ -56,6 +66,12 @@ public:
 
 	bool deplacement(echiquier *Echiquier);
 
+	void setposPPy(bool null);
+	int getposPPy();
+
+	void setposPPx(bool null);
+	int getposPPx();
+
 	~piece();
 
 protected:
@@ -65,14 +81,14 @@ protected:
 	int ixdep = 0; // jusqu'à combien en x?
 	int iydep = 0; // jusqu'à combien en y?
 
-	bool pdep = 1;
+	bool pdep = 1; // premier deplacement (bool)
 	bool depIncorrect = false;
 
 	int id;
 
 	bool manger;
 
-	int couleur; // 0 = rien 1 = blanc & 2 = noir
+	int couleur; // 0 = rien | 1 = blanc | 2 = noir
 
 	bool clicker;
 
@@ -81,6 +97,9 @@ protected:
 
 	int xi; // x initial
 	int yi; // y initial
+
+	int posPPy; // position y de la prise en passant
+	int posPPx; // position y de la prise en passant
 
 	SDL_Rect *rI;
 };

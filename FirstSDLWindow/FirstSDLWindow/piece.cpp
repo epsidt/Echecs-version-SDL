@@ -86,7 +86,7 @@ bool piece::getmanger()
 	return manger;
 }
 
-//  methode get/set des position sur le tableau
+//-- methode get/set des position sur le tableau --
 int piece::getx()
 {
 	return x;
@@ -103,8 +103,9 @@ void piece::sety(int ny)
 {
 	y = ny;
 }
+//-------------------------------------------------
 
-//  methode get/set des position inital sur le tableau
+//-- methode get/set des position inital sur le tableau --
 int piece::getxi()
 {
 	return xi;
@@ -121,6 +122,7 @@ void piece::setyi(int nyi)
 {
 	yi = nyi;
 }
+//---------------------------------------------------------
 
 void piece::setdepIncorrect(bool i)
 {
@@ -142,16 +144,10 @@ bool piece::getpdep()
 	return pdep;
 }
 
-piece::~piece()
-{
-}
-
-// -----------------LES DEPLACEMENTs !!!----------------------
+// =====================LES DEPLACEMENTs !!!==========================
+// ------------ Parametre des deplacement ---------------
 void piece::dispodeplace(echiquier *Echiquier)
 {
-	cout << "pdep = " << pdep << endl;
-	cout << "couleur = " << couleur << endl;
-
 	if (getid() == 0) // Pion
 	{
 		dx = 1;
@@ -198,11 +194,11 @@ void piece::dispodeplace(echiquier *Echiquier)
 				haut(Echiquier);
 
 				dx = 1;
-				dy = 2;
+				dy = 1;
 				hautgauche(Echiquier);
 
 				dx = 1;
-				dy = 2;
+				dy = 1;
 				hautdroite(Echiquier);
 			}
 			else if (pdep == 0)
@@ -246,7 +242,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 	}
 	if (getid() == 2)// cavalier
 	{
-	//================= VERS LA DROITE =======================
+	//========= VERS LA DROITE ===========
 		//------ hautdroite ------
 		ixdep = 1;
 		iydep = 2;
@@ -276,7 +272,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 		dy = 2;
 		basdroite(Echiquier);
 
-	//================= VERS LA GAUCHE =======================
+	//========== VERS LA GAUCHE ===========
 		//------ hautgauche ------
 		ixdep = 1;
 
@@ -437,7 +433,9 @@ void piece::dispodeplace(echiquier *Echiquier)
 		basdroite(Echiquier);
 	}
 }
+// ------------------------------------------------------
 
+// ------------ Joystick cardinal -----------------
 void piece::haut(echiquier *Echiquier)
 {
 	//------------------------- haut ------------------------------
@@ -531,14 +529,21 @@ void piece::hautdroite(echiquier *Echiquier)
 	{
 		if (dy <= iydep && dy <= yi)
 		{
-			if (Echiquier->GetCases(xi + dx, yi - dy)->getoccuper() != true)
+			if (Echiquier->GetCases(xi + dx, yi - dy)->getoccuper() != true) // si la case n'est pas occuper
 			{
-				if (getid() != 0)
+				if (getid() == 0)
+				{
+					if (Echiquier->GetCases(xi + dx, yi - dy)->getcouleurdeloccupant() != couleur && Echiquier->GetCases(xi + dx, yi - dy)->getcouleurdeloccupant() != 0) // si la couleur de l'occupant n'est pas la même que celle de la piece
+					{
+						Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
+					}
+				}
+				else
 				{
 					Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
 				}
 			}
-			else if (Echiquier->GetCases(xi + dx, yi - dy)->getcouleurdeloccupant() != couleur)
+			else if (Echiquier->GetCases(xi + dx, yi - dy)->getcouleurdeloccupant() != couleur) // si la couleur de l'occupant n'est pas la même que celle de la piece
 			{
 				Echiquier->GetCases(xi + dx, yi - dy)->setdisponible(true);
 			}
@@ -560,7 +565,15 @@ void piece::basgauche(echiquier *Echiquier)
 		{
 			if (Echiquier->GetCases(xi - dx, yi + dy)->getoccuper() != true)
 			{
-				if (getid() != 0)
+				if (getid()	== 0)
+				{
+					if (Echiquier->GetCases(xi - dx, yi + dy)->getcouleurdeloccupant() != couleur && Echiquier->GetCases(xi - dx, yi + dy)->getcouleurdeloccupant() != 0 )
+					{
+						Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
+					}
+					
+				}
+				else
 				{
 					Echiquier->GetCases(xi - dx, yi + dy)->setdisponible(true);
 				}
@@ -587,7 +600,14 @@ void piece::hautgauche(echiquier *Echiquier)
 		{
 			if (Echiquier->GetCases(xi - dx, yi - dy)->getoccuper() != true)
 			{
-				if (getid() != 0)
+				if (getid() == 0)
+				{
+					if (Echiquier->GetCases(xi - dx, yi - dy)->getcouleurdeloccupant() != couleur && Echiquier->GetCases(xi - dx, yi - dy)->getcouleurdeloccupant() != 0)
+					{
+						Echiquier->GetCases(xi - dx, yi - dy)->setdisponible(true);
+					}
+				}
+				else
 				{
 					Echiquier->GetCases(xi - dx, yi - dy)->setdisponible(true);
 				}
@@ -614,7 +634,14 @@ void piece::basdroite(echiquier *Echiquier)
 		{
 			if (Echiquier->GetCases(xi + dx, yi + dy)->getoccuper() != true)
 			{
-				if (getid() != 0)
+				if (getid() == 0)
+				{
+					if (Echiquier->GetCases(xi + dx, yi + dy)->getcouleurdeloccupant() != couleur && Echiquier->GetCases(xi + dx, yi + dy)->getcouleurdeloccupant() != 0)
+					{
+						Echiquier->GetCases(xi + dx, yi + dy)->setdisponible(true);
+					}
+				}
+				else
 				{
 					Echiquier->GetCases(xi + dx, yi + dy)->setdisponible(true);
 				}
@@ -632,7 +659,9 @@ void piece::basdroite(echiquier *Echiquier)
 		}
 	}
 }
+//-------------------------------------------------
 
+//------------ deplacement autorisée ------------------
 bool piece::deplacement(echiquier *Echiquier)
 {
 	// si la case ou se trouve le pion est disponible alors ... deplacement accordé
@@ -641,8 +670,6 @@ bool piece::deplacement(echiquier *Echiquier)
 	{
 		if (Echiquier->GetCases(x, y)->getdisponible())
 		{
-			cout << "Dans deplacement " << Echiquier->GetCases(x, y)->getdisponible() << " x/y :";
-			cout << x << " " << y << endl;
 			return true;
 		}
 		else
@@ -651,4 +678,57 @@ bool piece::deplacement(echiquier *Echiquier)
 		}
 	}
 	return false;
+}
+//-----------------------------------------------------
+
+//---------- prise en passant ------------
+void piece::setposPPy(bool null)
+{
+	if (!null)
+	{
+		if (couleur == 1) // si couleur = blanche
+		{
+			posPPy = y - 1;
+		}
+		if (couleur == 2) // si couluer = noire
+		{
+			posPPy = y + 1;
+		}
+	}
+	else
+	{
+		posPPy = NULL;
+	}
+}
+int piece::getposPPy()
+{
+	return posPPy;
+}
+void piece::setposPPx(bool null)
+{
+	if (!null)
+	{
+		if (couleur == 1) // si couleur = blanche
+		{
+			posPPx = x;
+		}
+		if (couleur == 2) // si couluer = noire
+		{
+			posPPx = x;
+		}
+	}
+	else
+	{
+		posPPx = NULL;
+	}
+}
+int piece::getposPPx()
+{
+	return posPPx;
+}
+//---------------------------------------
+//==================================================================
+
+piece::~piece()
+{
 }

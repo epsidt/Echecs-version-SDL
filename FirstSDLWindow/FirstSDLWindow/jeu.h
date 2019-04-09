@@ -36,6 +36,9 @@ public:
 private:
 	int jtour = 0; // tour de jeu
 	echiquier *Echiquier;
+	int iTDPiece; // id dans le tableau des pièces de la dernier pièce
+
+	GameObject* background;
 
 	vector<GameObject*> Pointverts;
 
