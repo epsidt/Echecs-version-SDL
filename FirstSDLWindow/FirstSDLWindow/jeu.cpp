@@ -40,21 +40,45 @@ void jeu::init(const char * titre, int xpos, int ypos, int largeur, int hauteur,
 	else {
 		isRunning = false;
 	}
+	//initialisation du background
 	background = new GameObject("texture/background.png", renderer);
 	background->Position(0, 0);
 	background->Taille(1280, 800);
+	//------ initialisation des composant de syntaxe ------
 
-	//initialisation Echiquier
+	Syntaxe = new SyntaxeHandler(renderer);
+
+	Syntaxe->initasset();
+
+	Syntaxe->getMots("tourJoueur")->Position(850, 57);
+	Syntaxe->getMots("noir")->Position(375, 70);
+	Syntaxe->getMots("tour")->Position(365, 695);
+
+	Syntaxe->getChiffres(0, 1, true)->Position(Syntaxe->getMots("tour")->getPos().x + 80, Syntaxe->getMots("tour")->getPos().y + 8);
+	Syntaxe->ChiffresVisibilite(0, 1, false);
+
+	Syntaxe->getChiffres(0, 2, true)->Position(Syntaxe->getMots("tour")->getPos().x + 80, Syntaxe->getMots("tour")->getPos().y + 8);
+	Syntaxe->ChiffresVisibilite(0, 2, false);
+	
+	Syntaxe->getChiffres(1,1,true)->Position(Syntaxe->getMots("tourJoueur")->getPos().x + 305, Syntaxe->getMots("tourJoueur")->getPos().y + 14);
+	Syntaxe->ChiffresVisibilite(1,1, true);
+
+	Syntaxe->getChiffres(1,0,false)->Position(Syntaxe->getMots("tour")->getPos().x + 80, Syntaxe->getMots("tour")->getPos().y + 8);
+	Syntaxe->ChiffresVisibilite(1,0, true);
+
+	//-----------------------------------------------------
+
+	//initialisation de l'Echiquier
 	Echiquier = new echiquier("texture/Echiquier.png", renderer);
-	Echiquier->Position(300, 58);
-	Echiquier->Taille(700, 690);
-	//initialisation case
+	Echiquier->Position(80, 57);
+	Echiquier->Taille(700, 695);
+	//initialisation de case
 	int posx; // pos = positions relative a la fenetre
 	int posy = 55; // pos = positions relative a la fenetre
 
 	for (int y = 0; y < 8; y++) // x/y = position dans le tableau de lechiquier
 	{
-		posx = 315;
+		posx = 95;
 		posy += 70;
 
 		for (int x = 0; x < 8; x++) // x/y = position dans le tableau de lechiquier
@@ -76,7 +100,7 @@ void jeu::init(const char * titre, int xpos, int ypos, int largeur, int hauteur,
 	int ix = 0;
 
 	int y = 0;
-	cout << "test initialisation  des piece : \n";
+	cout << "Test initialisation  des piece : \n______________________________________\n";
 	for (int c = 0; c < 2; c++) // la couleur
 	{
 		for (int i = 0; i < 6; i++) // les pions
@@ -211,7 +235,7 @@ void jeu::init(const char * titre, int xpos, int ypos, int largeur, int hauteur,
 				cout << "\n |id :" << i << " |couleur :" << c + 1 << " |type piece :" << typePiece << "\n |texture : "<< texture <<" |x :" << x << " |y :" << y << endl;
 				lesPieces[id] = GenerateurPiece::generer(i, false, 1, c + 1, Echiquier->GetCases(x, y)->Rcase, Echiquier->GetCases(x, y)->getx(), Echiquier->GetCases(x, y)->gety(), texture, renderer);
 				lesPieces[id]->setposI(); // remplace la position initial sur le tableau
-				// les cases sur les quelles les pions on été initialiser sont mise a occuper
+			// les cases sur les quelles les pions on été initialiser sont mise a occuper
 				Echiquier->GetCases(x, y)->setoccuper(true);
 				Echiquier->GetCases(x, y)->setcouleurdeloccupant(lesPieces[id]->getcouleur());
 				id++;
@@ -219,6 +243,7 @@ void jeu::init(const char * titre, int xpos, int ypos, int largeur, int hauteur,
 		}
 	}
 }
+
 int pi=32; // piece indice
 bool once= true; // pour effectuer des taches une seul fois dans la boucle handlevent
 
@@ -247,7 +272,9 @@ void jeu::handleEvents()
 							{
 								//------------------------------------ Rendre une case disponible ---------------------------------------
 								lesPieces[i]->setposI();
-								cout << "\nPiece : id=" << lesPieces[i]->getid() << " couleur=" << lesPieces[i]->getcouleur() << endl;
+								
+								cout << "\n!!--- Dernier pion it:" << iTDPiece;
+								cout << "\nPiece :"<<"it="<<i<<" id=" << lesPieces[i]->getid() << " couleur=" << lesPieces[i]->getcouleur() << endl;
 								cout << "position initial : xi=" << lesPieces[i]->getxi() << " yi=" << lesPieces[i]->getyi() << endl;
 								lesPieces[i]->dispodeplace(Echiquier); // rend les case disponible au deplacement
 								//-------------------------------------------------------------------------------------------------------
@@ -292,22 +319,70 @@ void jeu::handleEvents()
 								if (lesPieces[i]->deplacement(Echiquier)) // vérification deplacement valide ( case en x et y disponible)
 								{
 									jtour++;
+									//------------ les tours de jeux --------------
+									if (jtour < 10)
+									{
+										Syntaxe->ChiffresVisibilite(jtour - 1, 0, false);
+										Syntaxe->getChiffres(jtour,0, false)->Position(Syntaxe->getMots("tour")->getPos().x + 80, Syntaxe->getMots("tour")->getPos().y + 8);
+										Syntaxe->ChiffresVisibilite(jtour, 0, true);
+									}
+									else if (jtour >= 10)
+									{
+										if (jtour % 100 == 0)
+										{
+											Syntaxe->ChiffresVisibilite(9, 0, false);
+											Syntaxe->ChiffresVisibilite(9, 1, false);
+
+											Syntaxe->ChiffresVisibilite(jtour / 100 - 1, Syntaxe->getChiffresSize(jtour / 100 - 1), false);
+											Syntaxe->getChiffres(jtour / 100, Syntaxe->getChiffresSize(jtour / 100) + 1, true)->Position(Syntaxe->getMots("tour")->getPos().x + 80, Syntaxe->getMots("tour")->getPos().y + 8);
+											Syntaxe->ChiffresVisibilite(jtour / 100, Syntaxe->getChiffresSize(jtour / 100), true);
+										}
+										if (jtour % 10 == 0)
+										{
+											Syntaxe->ChiffresVisibilite(9, 0, false);
+											Syntaxe->ChiffresVisibilite((jtour -1 % 100) / 10, Syntaxe->getChiffresSize((jtour-1 % 100) / 10), false);
+											if (jtour < 100)
+											{
+												Syntaxe->getChiffres((jtour % 100) / 10, Syntaxe->getChiffresSize((jtour % 100) / 10) + 1, true)->Position(Syntaxe->getChiffres(jtour / 100, Syntaxe->getChiffresSize(jtour / 100), false)->getPos().x + Syntaxe->getChiffres(jtour / 100, Syntaxe->getChiffresSize(jtour / 100), false)->getPos().w, Syntaxe->getMots("tour")->getPos().y + 8);
+												Syntaxe->ChiffresVisibilite((jtour % 100) / 10, Syntaxe->getChiffresSize((jtour % 100) / 10), true);
+											}
+											else
+											{
+												Syntaxe->getChiffres((jtour % 100) / 10, Syntaxe->getChiffresSize((jtour % 100) / 10) - 1, false)->Position(Syntaxe->getChiffres(jtour / 100, Syntaxe->getChiffresSize(jtour / 100), false)->getPos().x + Syntaxe->getChiffres(jtour / 100, Syntaxe->getChiffresSize(jtour / 100), false)->getPos().w, Syntaxe->getMots("tour")->getPos().y + 8);
+												Syntaxe->ChiffresVisibilite((jtour % 100) / 10, Syntaxe->getChiffresSize((jtour % 100) / 10)-1, true);
+											}
+											
+										}
+
+										Syntaxe->ChiffresVisibilite((jtour - 1) % 10, 0, false);
+										Syntaxe->getChiffres(jtour % 10, 0, false)->Position(Syntaxe->getChiffres((jtour % 100) / 10, Syntaxe->getChiffresSize((jtour % 100) / 10), false)->getPos().x + Syntaxe->getChiffres((jtour % 100) / 10, Syntaxe->getChiffresSize((jtour % 100) / 10), false)->getPos().w, Syntaxe->getMots("tour")->getPos().y + 8);
+										Syntaxe->ChiffresVisibilite(jtour % 10, 0, true);
+									}
+									//--------------------------------------------
 
 									//--------- PRISE EN PASSANT (mise en place) -----------
+									
 									if (lesPieces[i]->getid() == 0)
 									{
-										if (lesPieces[i]->getpdep() != true)
+										if (!lesPieces[iTDPiece]->getmanger()) // la case de la position est mise a null si le pion a été manger
+										{
+											Echiquier->GetCases(lesPieces[iTDPiece]->getposPPx(), lesPieces[iTDPiece]->getposPPy())->setoccuper(false);
+											Echiquier->GetCases(lesPieces[iTDPiece]->getposPPx(), lesPieces[iTDPiece]->getposPPy())->setcouleurdeloccupant(0);
+										}
+										if (!lesPieces[i]->getpdep())
 										{
 											Echiquier->GetCases(lesPieces[i]->getposPPx(), lesPieces[i]->getposPPy())->setcouleurdeloccupant(0);
 										}
-										
-										if (lesPieces[i]->getpdep() == true)
+										if (lesPieces[i]->getpdep())
 										{
+											
 											lesPieces[i]->setposPPy(false);
 											lesPieces[i]->setposPPx(false);
 
 											cout << "posPPy =" << lesPieces[i]->getposPPy() << "posPPx =" << lesPieces[i]->getposPPx() << endl;
 											Echiquier->GetCases(lesPieces[i]->getposPPx(), lesPieces[i]->getposPPy())->setcouleurdeloccupant(lesPieces[i]->getcouleur()); // la case en X/Y ACTUELLE est mise a la couleur du pion qui l'occupe
+											
+											iTDPiece = i;
 										}
 									}
 									//------------------------------------------------------
@@ -342,24 +417,25 @@ void jeu::handleEvents()
 										{
 											if (lesPieces[i]->getx() == lesPieces[ip]->getposPPx() && lesPieces[i]->gety() == lesPieces[ip]->getposPPy()) // et si il se trouve a la position de la prise en passant d'un autre pion
 											{
-												Echiquier->GetCases(lesPieces[ip]->getposPPx(), lesPieces[ip]->getposPPy())->setoccuper(false);
-												Echiquier->GetCases(lesPieces[ip]->getposPPx(), lesPieces[ip]->getposPPy())->setcouleurdeloccupant(0);
+												Echiquier->GetCases(lesPieces[iTDPiece]->getposPPx(), lesPieces[iTDPiece]->getposPPy())->setoccuper(true);
+												Echiquier->GetCases(lesPieces[iTDPiece]->getposPPx(), lesPieces[iTDPiece]->getposPPy())->setcouleurdeloccupant(lesPieces[i]->getcouleur());
+												Echiquier->GetCases(lesPieces[ip]->getposPPx(), lesPieces[ip]->getposPPy())->setoccuper(true);
+												Echiquier->GetCases(lesPieces[ip]->getposPPx(), lesPieces[ip]->getposPPy())->setcouleurdeloccupant(lesPieces[i]->getcouleur());
 
 												lesPieces[ip]->setmanger(true);
 												lesPieces[ip]->Position(20, 23 + 23 * ip);
-												cout << "\n prise en passant pion : \n ip=" << ip << " couleur=" << lesPieces[ip]->getcouleur() << "\n x=" << lesPieces[ip]->getx() << " y=" << lesPieces[ip]->gety() << " PPy" << lesPieces[ip]->getposPPy() << endl;
+												cout << "\n prise en passant pion : \n ip=" << ip << " couleur=" << lesPieces[ip]->getcouleur() << "\n x=" << lesPieces[ip]->getx() << " y=" << lesPieces[ip]->gety() << endl;
 											}
 										}
 										//------------------------------------------------------------------------------------------
 									}
-
-									if (lesPieces[i]->getdepIncorrect() == false) // verifie si le deplacement est correct
+									//==============================================================================================================
+									if (!lesPieces[i]->getdepIncorrect()) // verifie si le deplacement est correct
 									{
 										lesPieces[i]->setpdep(0); // retire le premier deplacement au pion 
 									}
 
 									lesPieces[i]->setdepIncorrect(false); // le deplace ment est correct
-									iTDPiece = i;
 								}
 								else // n'execute pas cela si le deplacement est valide
 								{
@@ -384,6 +460,8 @@ void jeu::handleEvents()
 									}
 								}
 								Pointverts.clear();
+								Syntaxe->getMots("tourJoueur")->Taille(300, 60);
+								cout << "Tour de jeu : x=" << Syntaxe->getMots("tourJoueur")->getPos().x << " y=" << Syntaxe->getMots("tourJoueur")->getPos().y << " w=" << Syntaxe->getMots("tourJoueur")->getPos().w << " h=" << Syntaxe->getMots("tourJoueur")->getPos().h << endl;
 							}
 						}
 					}
@@ -416,8 +494,22 @@ void jeu::update()
 void jeu::render()
 {
 	SDL_RenderClear(renderer);
+
 	background->Render();
 	Echiquier->Render();
+
+	Syntaxe->getMots("tourJoueur")->Render();
+
+	for (int i = 0; i < 10; i++)
+	{
+		for (int i2 = 0; i2 <= Syntaxe->getChiffresSize(i); i2++)
+		{
+			Syntaxe->getChiffres(i,i2,false)->Render();
+		}
+	}
+	
+	Syntaxe->getMots("tour")->Render();
+	Syntaxe->getMots("Noir")->Render();
 
 	for (int i = 0; i < Pointverts.size(); i++)
 	{

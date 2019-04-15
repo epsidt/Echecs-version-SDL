@@ -53,6 +53,11 @@ bool GameObject::comparerPosition(SDL_Rect *r1, SDL_Rect *r2,int dif)
 	
 }
 
+SDL_Texture * GameObject::getTexture()
+{
+	return objTexture;
+}
+
 SDL_Rect GameObject::getPos()
 {
 	return posR;

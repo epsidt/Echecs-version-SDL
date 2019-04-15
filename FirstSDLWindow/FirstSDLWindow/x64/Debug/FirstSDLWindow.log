@@ -1,2 +1,18 @@
-﻿  jeu.cpp
+﻿  SyntaxeHandler.cpp
+  Case.cpp
+  cavalier.cpp
+  echiquier.cpp
+  fou.cpp
+  GameObject.cpp
+  GenerateurPiece.cpp
+  jeu.cpp
+  main.cpp
+  piece.cpp
+  pion.cpp
+  reine.cpp
+  roi.cpp
+  TextureManager.cpp
+  tour.cpp
+  Génération de code en cours...
+c:\dev\echecs-version-sdl\firstsdlwindow\firstsdlwindow\generateurpiece.cpp(43): warning C4715: 'GenerateurPiece::generer' : les chemins de contrôle ne retournent pas tous une valeur
   FirstSDLWindow.vcxproj -> C:\dev\Echecs-version-SDL\FirstSDLWindow\x64\Debug\FirstSDLWindow.exe

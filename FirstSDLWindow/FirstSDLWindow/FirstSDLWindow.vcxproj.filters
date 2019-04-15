@@ -16,6 +16,9 @@
     <Filter Include="texture">
       <UniqueIdentifier>{a251c806-dc19-4a9c-ada7-8d49a6102617}</UniqueIdentifier>
     </Filter>
+    <Filter Include="texture\Syntaxe">
+      <UniqueIdentifier>{fc358e92-a258-495f-8676-46dedba760fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="GenerateurPiece.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="SyntaxeHandler.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="jeu.h">
@@ -99,6 +105,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="GenerateurPiece.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="SyntaxeHandler.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -147,6 +156,51 @@
     </Image>
     <Image Include="texture\tourN.png">
       <Filter>texture</Filter>
+    </Image>
+    <Image Include="texture\Stour.png">
+      <Filter>texture</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S0.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S1.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S2.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S3.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S4.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S5.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S6.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S7.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S8.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\S9.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\SBlanc.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\SNoir.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\Stour.png">
+      <Filter>texture\Syntaxe</Filter>
+    </Image>
+    <Image Include="texture\Syntaxe\STourDeJoueur.png">
+      <Filter>texture\Syntaxe</Filter>
     </Image>
   </ItemGroup>
 </Project>

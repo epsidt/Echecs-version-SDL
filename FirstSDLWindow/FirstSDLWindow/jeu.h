@@ -1,9 +1,9 @@
 #pragma once
-#include <Windows.h>
 #include <SDL.h>
 #include <iostream>
 #include <SDL_image.h>
 #include <vector>
+#include "SyntaxeHandler.h"
 
 #include "GenerateurPiece.h"
 
@@ -34,11 +34,14 @@ public:
 	bool running();
 
 private:
-	int jtour = 0; // tour de jeu
+	int jtour = 89; // tour de jeu
+
 	echiquier *Echiquier;
-	int iTDPiece; // id dans le tableau des pièces de la dernier pièce
+
+	int iTDPiece = NULL; // id dans le tableau des pièces de la dernier pièce
 
 	GameObject* background;
+	SyntaxeHandler* Syntaxe;
 
 	vector<GameObject*> Pointverts;
 

@@ -529,7 +529,7 @@ void piece::hautdroite(echiquier *Echiquier)
 	{
 		if (dy <= iydep && dy <= yi)
 		{
-			if (Echiquier->GetCases(xi + dx, yi - dy)->getoccuper() != true) // si la case n'est pas occuper
+			if (!Echiquier->GetCases(xi + dx, yi - dy)->getoccuper()) // si la case n'est pas occuper
 			{
 				if (getid() == 0)
 				{
@@ -666,7 +666,7 @@ bool piece::deplacement(echiquier *Echiquier)
 {
 	// si la case ou se trouve le pion est disponible alors ... deplacement accordé
 	if (posR.y < 650 && posR.y > 90 &&
-		posR.x < 910 && posR.x > 350)
+		posR.x < 670 && posR.x > 70)
 	{
 		if (Echiquier->GetCases(x, y)->getdisponible())
 		{
@@ -704,24 +704,20 @@ int piece::getposPPy()
 {
 	return posPPy;
 }
+
 void piece::setposPPx(bool null)
 {
 	if (!null)
 	{
-		if (couleur == 1) // si couleur = blanche
-		{
-			posPPx = x;
-		}
-		if (couleur == 2) // si couluer = noire
-		{
-			posPPx = x;
-		}
+		posPPx = x;
+		posPPx = x;
 	}
 	else
 	{
 		posPPx = NULL;
 	}
 }
+
 int piece::getposPPx()
 {
 	return posPPx;

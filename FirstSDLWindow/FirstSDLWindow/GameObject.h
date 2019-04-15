@@ -1,5 +1,4 @@
 #pragma once
-#include <Windows.h>
 #include <SDL.h>
 #include <iostream>
 #include <SDL_image.h>
@@ -19,6 +18,7 @@ public:
 	void Taille(int nW, int nH);
 	static bool comparerPosition(SDL_Rect *r1, SDL_Rect *r2,int dif);
 
+	SDL_Texture *getTexture();
 	SDL_Rect getPos();
 
 

@@ -69,14 +69,8 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -135,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SyntaxeHandler.cpp" />
     <ClCompile Include="Case.cpp" />
     <ClCompile Include="cavalier.cpp" />
     <ClCompile Include="echiquier.cpp" />
@@ -151,6 +146,7 @@
     <ClCompile Include="tour.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SyntaxeHandler.h" />
     <ClInclude Include="Case.h" />
     <ClInclude Include="cavalier.h" />
     <ClInclude Include="echiquier.h" />
@@ -181,6 +177,21 @@
     <Image Include="texture\reineN.png" />
     <Image Include="texture\roiB.png" />
     <Image Include="texture\roiN.png" />
+    <Image Include="texture\Stour.png" />
+    <Image Include="texture\Syntaxe\S0.png" />
+    <Image Include="texture\Syntaxe\S1.png" />
+    <Image Include="texture\Syntaxe\S2.png" />
+    <Image Include="texture\Syntaxe\S3.png" />
+    <Image Include="texture\Syntaxe\S4.png" />
+    <Image Include="texture\Syntaxe\S5.png" />
+    <Image Include="texture\Syntaxe\S6.png" />
+    <Image Include="texture\Syntaxe\S7.png" />
+    <Image Include="texture\Syntaxe\S8.png" />
+    <Image Include="texture\Syntaxe\S9.png" />
+    <Image Include="texture\Syntaxe\SBlanc.png" />
+    <Image Include="texture\Syntaxe\SNoir.png" />
+    <Image Include="texture\Syntaxe\Stour.png" />
+    <Image Include="texture\Syntaxe\STourDeJoueur.png" />
     <Image Include="texture\tourB.png" />
     <Image Include="texture\tourN.png" />
   </ItemGroup>
