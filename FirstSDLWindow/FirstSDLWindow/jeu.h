@@ -31,10 +31,16 @@ public:
 	void render();
 	void clean();
 
+	// roque
+	void roque();
+
 	bool running();
 
 private:
-	int jtour = 89; // tour de jeu
+	bool GrandRoque = false;
+	bool PetitRoque = false;
+
+	int jtour = 1; // tour de jeu
 
 	echiquier *Echiquier;
 

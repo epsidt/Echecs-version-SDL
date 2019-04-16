@@ -154,7 +154,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 		dy = 1;
 		ixdep = 1;
 
-		if (couleur == 1) // Deplacement en fonction de la couleur
+		if (couleur == 2) // Deplacement en fonction de la couleur
 		{
 			if (pdep == 1) // premier deplacement ou non
 			{
@@ -185,7 +185,7 @@ void piece::dispodeplace(echiquier *Echiquier)
 				basdroite(Echiquier);
 			}
 		}
-		if (couleur == 2) // Deplacement en fonction de la couleur
+		if (couleur == 1) // Deplacement en fonction de la couleur
 		{
 			if (pdep == 1)
 			{
@@ -379,7 +379,6 @@ void piece::dispodeplace(echiquier *Echiquier)
 		ixdep = 1;
 		iydep = 1;
 		basdroite(Echiquier);
-
 	}
 	if (getid() == 5) // reine
 	{
@@ -688,11 +687,11 @@ void piece::setposPPy(bool null)
 	{
 		if (couleur == 1) // si couleur = blanche
 		{
-			posPPy = y - 1;
+			posPPy = y + 1;
 		}
 		if (couleur == 2) // si couluer = noire
 		{
-			posPPy = y + 1;
+			posPPy = y - 1;
 		}
 	}
 	else
@@ -721,6 +720,13 @@ void piece::setposPPx(bool null)
 int piece::getposPPx()
 {
 	return posPPx;
+}
+void piece::setConditiondep(int ndx, int ndy, int nixdep, int niydep)
+{
+	dx = ndx;
+	dy = ndy;
+	ixdep = nixdep;
+	iydep = niydep;
 }
 //---------------------------------------
 //==================================================================

@@ -22,7 +22,7 @@ public:
 
 	void setid(int nid);
 	int getid();
-
+	// 0 = rien | 1 = blanc | 2 = noir
 	int getcouleur();
 
 	void setmanger(bool nManger);
@@ -71,6 +71,8 @@ public:
 
 	void setposPPx(bool null);
 	int getposPPx();
+
+	void setConditiondep(int ndx, int ndy, int nixdep, int niydep);
 
 	~piece();
 

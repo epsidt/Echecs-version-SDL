@@ -81,6 +81,65 @@ void SyntaxeHandler::initasset()
 		Mots[i]->Taille(rect.w, rect.h);
 	}
 	
+	for (int i = 0; i < 2; i++)
+	{
+		switch (i)
+		{
+		case 0:
+			texture = "texture/Syntaxe/S1.png";
+			break;
+		case 1:
+			texture = "texture/Syntaxe/S2.png";
+			break;
+		default:
+			break;
+		}
+		Chiffresjoueur[i] = new GameObject(texture, renderer);
+	}
+}
+
+void SyntaxeHandler::initchiffres()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		switch (i)
+		{
+		case 0:
+			texture = "texture/Syntaxe/S0.png";
+			break;
+		case 1:
+			texture = "texture/Syntaxe/S1.png";
+			break;
+		case 2:
+			texture = "texture/Syntaxe/S2.png";
+			break;
+		case 3:
+			texture = "texture/Syntaxe/S3.png";
+			break;
+		case 4:
+			texture = "texture/Syntaxe/S4.png";
+			break;
+		case 5:
+			texture = "texture/Syntaxe/S5.png";
+			break;
+		case 6:
+			texture = "texture/Syntaxe/S6.png";
+			break;
+		case 7:
+			texture = "texture/Syntaxe/S7.png";
+			break;
+		case 8:
+			texture = "texture/Syntaxe/S8.png";
+			break;
+		case 9:
+			texture = "texture/Syntaxe/S9.png";
+			break;
+		default:
+			break;
+		}
+		Chiffres[i][++n[i]] = new GameObject(texture, renderer);
+		Chiffres[i][n[i]]->Taille(rect.w, rect.h);
+	}
 }
 
 
@@ -102,7 +161,7 @@ GameObject * SyntaxeHandler::getMots(const char* leMot)
 	{
 		return Mots[3];
 	}
-	return Mots[1];
+	return Mots[0];
 }
 
 GameObject * SyntaxeHandler::getChiffres(int leChiffre,int i,bool unAutre)
@@ -150,7 +209,7 @@ GameObject * SyntaxeHandler::getChiffres(int leChiffre,int i,bool unAutre)
 
 		}
 
-		Chiffres[leChiffre][n[leChiffre]=i] = new GameObject(texture, renderer);
+		Chiffres[leChiffre][++n[leChiffre]] = new GameObject(texture, renderer);
 		Chiffres[leChiffre][n[leChiffre]]->Taille(rect.w, rect.h);
 		return Chiffres[leChiffre][n[leChiffre]];
 	}
@@ -246,6 +305,80 @@ void SyntaxeHandler::ChiffresVisibilite(int lechiffre,int i,bool visible)
 		Chiffres[lechiffre][i]->Taille(rect.w, rect.h);
 	}
 	
+}
+
+void SyntaxeHandler::MotsVisibilite(const char *lemot, bool visibile)
+{
+	if (visibile)
+	{
+		if (lemot == "blanc")
+		{
+			Mots[0]->Taille(128,44);
+		}
+		else if (lemot == "noir")
+		{
+			Mots[1]->Taille(96, 53);
+		}
+		else if (lemot == "tour")
+		{
+			Mots[2]->Taille(75, 45);
+		}
+		else if (lemot == "tourJoueur")
+		{
+			Mots[3]->Taille(300, 60);
+		}
+	}
+	else
+	{
+		if (lemot == "blanc")
+		{
+			Mots[0]->Taille(0,0);
+		}
+		else if (lemot == "noir")
+		{
+			Mots[1]->Taille(0, 0);
+		}
+		else if (lemot == "tour")
+		{
+			Mots[2]->Taille(0,0);
+		}
+		else if (lemot == "tourJoueur")
+		{
+			Mots[3]->Taille(0,0);
+		}
+	}
+	
+}
+
+GameObject* SyntaxeHandler::getChiffresjoueur(int leChiffre)
+{
+	return Chiffresjoueur[leChiffre];
+}
+
+void SyntaxeHandler::ChiffresjoueurVisibilite(int lechiffre, bool visible)
+{
+	if (visible)
+	{
+		rect.h = 33;
+		switch (lechiffre)
+		{
+		case 0:
+			rect.w = 15;
+			break;
+		case 1:
+			rect.w = 25;
+			break;
+		}
+		Chiffresjoueur[lechiffre]->Taille(rect.w, rect.h);
+	}
+	else
+	{
+
+		rect.h = 0;
+		rect.w = 0;
+
+		Chiffresjoueur[lechiffre]->Taille(rect.w, rect.h);
+	}
 }
 
 SyntaxeHandler::~SyntaxeHandler()
