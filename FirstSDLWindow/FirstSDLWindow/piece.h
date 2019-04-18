@@ -14,8 +14,10 @@ public:
 	void setrposI(SDL_Rect *nouvRect); // set le rectangle de la position inital sur le tableau
 
 	//set la position inital par rapport a la réel position du pion sur le tableau
+	//xi = x et yi = y
 	void setposI(); 
 	//set la position réel par rapport a la position inital du pion sur le tableau
+	//x = xi et y = yi
 	void setpos();
 
 	SDL_Rect * getrI(); // renvois le rectengle initial
@@ -52,17 +54,27 @@ public:
 	void setdepIncorrect(bool i);
 	bool getdepIncorrect();
 
-	void dispodeplace(echiquier *Echiquier);
+	void AutorisationDeplacement(echiquier *Echiquier, bool controle, bool ic);
 
-	void haut(echiquier *Echiquier); // la Direction
-	void bas(echiquier *Echiquier); // la Direction
-	void gauche(echiquier *Echiquier); // la Direction
-	void droite(echiquier *Echiquier); // la Direction
-
-	void hautdroite(echiquier *Echiquier); // la Direction
-	void basgauche(echiquier *Echiquier); // la Direction
-	void hautgauche(echiquier *Echiquier); // la Direction
-	void basdroite(echiquier *Echiquier); // la Direction
+	//la Direction Dans laquel on rend les case disponible
+	void haut(echiquier *Echiquier, bool controle, bool ic);
+	//la Direction Dans laquel on rend les case disponible
+	void bas(echiquier *Echiquier, bool controle, bool ic);
+	//la Direction Dans laquel on rend les case disponible
+	void gauche(echiquier *Echiquier, bool controle, bool ic);
+	// la Direction
+	void droite(echiquier *Echiquier, bool controle, bool ic);
+	
+	// la Direction
+	void hautdroite(echiquier *Echiquier, bool controle, bool ic);
+	// la Direction
+	void basgauche(echiquier *Echiquier, bool controle, bool ic);
+	// la Direction
+	void hautgauche(echiquier *Echiquier, bool controle, bool ic);
+	// la Direction
+	void basdroite(echiquier *Echiquier, bool controle, bool ic);
+	
+	void EchecRoi(echiquier *Echiquier);
 
 	bool deplacement(echiquier *Echiquier);
 
@@ -74,9 +86,18 @@ public:
 
 	void setConditiondep(int ndx, int ndy, int nixdep, int niydep);
 
+	bool getPieceProtectrice();
+	void setPieceProtectrice(bool i);
+
+	bool getpieceMenacente(); 
+	void setpieceMenacente(bool npieceMenacente);
+
 	~piece();
 
 protected:
+	bool PieceMenacente;
+	bool PieceProtectrice;
+
 	int dx = 1; // a partir de quel x
 	int dy = 1; // a partir de quel y
 

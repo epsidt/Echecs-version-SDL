@@ -47,6 +47,16 @@ void Case::setcouleurdeloccupant(int nCouleurdeloccupant)
 	couleurdeloccupant = nCouleurdeloccupant;
 }
 
+bool Case::getcontroler()
+{
+	return controler;
+}
+
+void Case::setcontroler(bool ncontroler)
+{
+	controler = ncontroler;
+}
+
 bool Case::getdisponible()
 {
 	return disponible;
@@ -55,6 +65,46 @@ bool Case::getdisponible()
 void Case::setdisponible(bool disponibiliter)
 {
 	disponible = disponibiliter;
+}
+
+bool Case::getPriseEnPassant()
+{
+	return PriseEnPassant;
+}
+
+void Case::setPriseEnPassant(bool nPriseEnPassant)
+{
+	PriseEnPassant = nPriseEnPassant;
+}
+
+bool Case::getechecRoi()
+{
+	return echecRoi;
+}
+
+void Case::setechecRoi(bool nechecRoi)
+{
+	echecRoi = nechecRoi;
+}
+
+bool Case::getsauverRoi()
+{
+	return sauverRoi;
+}
+
+void Case::setsauverRoi(bool nsauverRoi)
+{
+	sauverRoi = nsauverRoi;
+}
+
+int Case::getidpiece()
+{
+	return idpiece;
+}
+
+void Case::setidpiece(int nidpiece)
+{
+	idpiece = nidpiece;
 }
 
 

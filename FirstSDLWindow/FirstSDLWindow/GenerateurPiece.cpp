@@ -40,6 +40,7 @@ piece* GenerateurPiece::generer(int Id, bool manger, bool Pdep, int Couleur, SDL
 		return new reine(Id, manger, Pdep, Couleur, nouvRect, nx, ny, texturesheet, ren);
 		break;
 	}
+	return NULL;
 }
 
 

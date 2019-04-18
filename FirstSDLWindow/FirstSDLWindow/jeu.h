@@ -31,12 +31,37 @@ public:
 	void render();
 	void clean();
 
-	// roque
-	void roque();
-
+	//roque 
+	void roque(int i);
+	void verificationRoque(int i);
 	bool running();
+	//forcer la position dans une case
+	void ForcerPosition(int i);
+	//pointvert
+	void AfficherPointvert(int i);
+	//Compteur de tour
+	void CompteurDeTour();
+	//Prise en passant
+	void MepPriseEnPassant(int i);
+	void PriseEnPassant(int i, int ip);
+	//Cannibalisme de piece
+	void Cannibalisme(int i);
+	void MangerPiece(int i, int ip);
+	//Echec roi
+	void DetectionEchecRoi(int i2);
+	void setPieceProtectionRoi(int i2);
+	void setPieceMenacente(int i2);
+
+	int getnbProtecRoiB();
+	void setnbProtecRoiB(int newnbProtecRoiB);
+
+	int getnbProtecRoiN();
+	void setnbProtecRoiN(int newnbProtecRoiN);
 
 private:
+	int nbProtecRoiB = 0; // nombre de pièce qui protège le rois
+	int nbProtecRoiN = 0; // nombre de pièce qui protège le rois
+
 	bool GrandRoque = false;
 	bool PetitRoque = false;
 
